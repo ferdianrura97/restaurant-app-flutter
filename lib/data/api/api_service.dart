@@ -3,12 +3,11 @@ import 'package:http/http.dart' as http;
 import '../model/restaurant.dart';
 import '../model/restaurant_detail.dart';
 import '../model/review_response.dart';
+import '../../common/constants.dart';
 
 class ApiService {
-  static const String _baseUrl = 'https://restaurant-api.dicoding.dev';
-
   Future<RestaurantListResponse> getRestaurantList() async {
-    final response = await http.get(Uri.parse('$_baseUrl/list'));
+    final response = await http.get(Uri.parse('${Constants.baseUrl}/list'));
     if (response.statusCode == 200) {
       return RestaurantListResponse.fromJson(json.decode(response.body));
     } else {
@@ -17,7 +16,7 @@ class ApiService {
   }
 
   Future<RestaurantDetailResponse> getRestaurantDetail(String id) async {
-    final response = await http.get(Uri.parse('$_baseUrl/detail/$id'));
+    final response = await http.get(Uri.parse('${Constants.baseUrl}/detail/$id'));
     if (response.statusCode == 200) {
       return RestaurantDetailResponse.fromJson(json.decode(response.body));
     } else {
@@ -26,7 +25,7 @@ class ApiService {
   }
 
   Future<RestaurantSearchResponse> searchRestaurants(String query) async {
-    final response = await http.get(Uri.parse('$_baseUrl/search?q=$query'));
+    final response = await http.get(Uri.parse('${Constants.baseUrl}/search?q=$query'));
     if (response.statusCode == 200) {
       return RestaurantSearchResponse.fromJson(json.decode(response.body));
     } else {
@@ -36,7 +35,7 @@ class ApiService {
 
   Future<ReviewResponse> postReview(String id, String name, String review) async {
     final response = await http.post(
-      Uri.parse('$_baseUrl/review'),
+      Uri.parse('${Constants.baseUrl}/review'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'id': id,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../provider/restaurant_detail_provider.dart';
 import '../provider/result_state.dart';
+import '../common/constants.dart';
 import '../data/model/restaurant_detail.dart';
 
 class RestaurantDetailPage extends StatefulWidget {
@@ -50,7 +51,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                    Hero(
                     tag: restaurant.pictureId,
                     child: Image.network(
-                      'https://restaurant-api.dicoding.dev/images/large/${restaurant.pictureId}',
+                      '${Constants.imageLargeUrl}${restaurant.pictureId}',
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) =>
                           const Icon(Icons.error, size: 100),

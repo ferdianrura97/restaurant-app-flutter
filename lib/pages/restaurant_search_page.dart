@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../data/model/restaurant.dart';
 import '../provider/restaurant_search_provider.dart';
 import '../provider/result_state.dart';
+import '../common/constants.dart';
 
 class RestaurantSearchPage extends StatelessWidget {
   const RestaurantSearchPage({super.key});
@@ -87,7 +88,7 @@ class RestaurantSearchPage extends StatelessWidget {
                   bottomLeft: Radius.circular(12)
                 ),
                 child: Image.network(
-                  'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
+                  '${Constants.imageSmallUrl}${restaurant.pictureId}',
                   width: 120,
                   height: 100,
                   fit: BoxFit.cover,

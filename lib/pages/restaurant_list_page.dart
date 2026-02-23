@@ -4,6 +4,7 @@ import '../data/model/restaurant.dart';
 import '../provider/restaurant_list_provider.dart';
 import '../provider/result_state.dart';
 import '../provider/theme_provider.dart';
+import '../common/constants.dart';
 
 class RestaurantListPage extends StatelessWidget {
   const RestaurantListPage({super.key});
@@ -103,7 +104,7 @@ class RestaurantListPage extends StatelessWidget {
                   bottomLeft: Radius.circular(12)
                 ),
                 child: Image.network(
-                  'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
+                  '${Constants.imageSmallUrl}${restaurant.pictureId}',
                   width: 120,
                   height: 100,
                   fit: BoxFit.cover,
