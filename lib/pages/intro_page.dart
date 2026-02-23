@@ -58,7 +58,7 @@ class IntroPage extends StatelessWidget {
         const Spacer(),
 
         Text(
-          "THE TASTE OF JAPANESE FOOD",
+          "THE TASTE OF POPULAR FOOD",
           style: GoogleFonts.dmSerifDisplay(
             fontSize: width < 360 ? 30 : 40,
             color: Colors.white,
@@ -69,7 +69,7 @@ class IntroPage extends StatelessWidget {
         SizedBox(height: height * 0.015),
 
         Text(
-          "Feel the taste of the most popular Japanese food from anywhere and anytime",
+          "Feel the taste of the most popular restaurant food from anywhere and anytime",
           style: TextStyle(
             color: Colors.grey[200],
             fontSize: width < 360 ? 13 : 15,
@@ -83,7 +83,7 @@ class IntroPage extends StatelessWidget {
           width: double.infinity,
           child: Button(
             text: "Get Started",
-            route: '/menuPage',
+            route: '/restaurantListPage',
           ),
         ),
       ],
@@ -110,7 +110,7 @@ class IntroPage extends StatelessWidget {
               const Spacer(),
 
               Text(
-                "THE TASTE OF JAPANESE FOOD",
+                "THE TASTE OF POPULAR FOOD",
                 style: GoogleFonts.dmSerifDisplay(
                   fontSize: 36,
                   color: Colors.white,
@@ -121,7 +121,7 @@ class IntroPage extends StatelessWidget {
               SizedBox(height: height * 0.02),
 
               Text(
-                "Feel the taste of the most popular Japanese food from anywhere and anytime",
+                "Feel the taste of the most popular restaurant food from anywhere and anytime",
                 style: TextStyle(
                   color: Colors.grey[200],
                   fontSize: 14,
@@ -135,7 +135,7 @@ class IntroPage extends StatelessWidget {
                 width: 200,
                 child: Button(
                   text: "Get Started",
-                  route: '/menuPage',
+                  route: '/restaurantListPage',
                 ),
               ),
             ],
