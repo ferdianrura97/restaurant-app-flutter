@@ -37,8 +37,8 @@ void main() async {
   await notificationHelper.requestPermission(flutterLocalNotificationsPlugin);
 
   // Check if app was launched by tapping a notification
-  final launchDetails =
-      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  final launchDetails = await flutterLocalNotificationsPlugin
+      .getNotificationAppLaunchDetails();
   String? notificationRestaurantId;
   if (launchDetails != null &&
       launchDetails.didNotificationLaunchApp &&

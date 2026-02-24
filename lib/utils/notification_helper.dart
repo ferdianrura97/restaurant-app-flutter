@@ -50,9 +50,7 @@ class NotificationHelper {
     );
   }
 
-  Future<void> requestPermission(
-    FlutterLocalNotificationsPlugin plugin,
-  ) async {
+  Future<void> requestPermission(FlutterLocalNotificationsPlugin plugin) async {
     await plugin
         .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin
