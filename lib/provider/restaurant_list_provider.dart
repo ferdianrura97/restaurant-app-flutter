@@ -17,16 +17,18 @@ class RestaurantListProvider extends ChangeNotifier {
     try {
       _state = const ResultStateLoading();
       notifyListeners();
-      
+
       final response = await apiService.getRestaurantList();
-      
+
       if (response.restaurants.isEmpty) {
         _state = const ResultStateNoData('Empty Data');
       } else {
         _state = ResultStateHasData(response);
       }
     } catch (e) {
-      _state = const ResultStateError('No Internet Connection or Failed to fetch data');
+      _state = const ResultStateError(
+        'No Internet Connection or Failed to fetch data',
+      );
     } finally {
       notifyListeners();
     }

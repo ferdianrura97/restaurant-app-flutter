@@ -17,11 +17,13 @@ class Menu {
   final List<MenuItem> drinks;
   Menu({required this.foods, required this.drinks});
   factory Menu.fromJson(Map<String, dynamic> json) => Menu(
-        foods: List<MenuItem>.from(
-            (json['foods'] as List).map((x) => MenuItem.fromJson(x))),
-        drinks: List<MenuItem>.from(
-            (json['drinks'] as List).map((x) => MenuItem.fromJson(x))),
-      );
+    foods: List<MenuItem>.from(
+      (json['foods'] as List).map((x) => MenuItem.fromJson(x)),
+    ),
+    drinks: List<MenuItem>.from(
+      (json['drinks'] as List).map((x) => MenuItem.fromJson(x)),
+    ),
+  );
 }
 
 class CustomerReview {
@@ -36,10 +38,10 @@ class CustomerReview {
   });
 
   factory CustomerReview.fromJson(Map<String, dynamic> json) => CustomerReview(
-        name: json['name'],
-        review: json['review'],
-        date: json['date'],
-      );
+    name: json['name'],
+    review: json['review'],
+    date: json['date'],
+  );
 }
 
 class RestaurantDetail {
@@ -76,12 +78,15 @@ class RestaurantDetail {
         address: json['address'],
         pictureId: json['pictureId'],
         categories: List<Category>.from(
-            (json['categories'] as List).map((x) => Category.fromJson(x))),
+          (json['categories'] as List).map((x) => Category.fromJson(x)),
+        ),
         menus: Menu.fromJson(json['menus']),
         rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
         customerReviews: List<CustomerReview>.from(
-            (json['customerReviews'] as List)
-                .map((x) => CustomerReview.fromJson(x))),
+          (json['customerReviews'] as List).map(
+            (x) => CustomerReview.fromJson(x),
+          ),
+        ),
       );
 }
 

@@ -5,11 +5,7 @@ class AppAlert extends StatelessWidget {
   final String title;
   final String description;
 
-  const AppAlert({
-    super.key,
-    required this.title,
-    required this.description,
-  });
+  const AppAlert({super.key, required this.title, required this.description});
 
   @override
   Widget build(BuildContext context) {

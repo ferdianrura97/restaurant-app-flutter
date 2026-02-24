@@ -15,11 +15,13 @@ class RestaurantDetailProvider extends ChangeNotifier {
     try {
       _state = const ResultStateLoading();
       notifyListeners();
-      
+
       final response = await apiService.getRestaurantDetail(id);
       _state = ResultStateHasData(response);
     } catch (e) {
-      _state = const ResultStateError('No Internet Connection or Failed to fetch data');
+      _state = const ResultStateError(
+        'No Internet Connection or Failed to fetch data',
+      );
     } finally {
       notifyListeners();
     }

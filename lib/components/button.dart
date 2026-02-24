@@ -12,9 +12,8 @@ class Button extends StatelessWidget {
     required this.text,
     this.route,
     this.onPressed,
-    this.iconData = Icons.arrow_forward_sharp
+    this.iconData = Icons.arrow_forward_sharp,
   });
-
 
   void _handlePressed(BuildContext context) {
     if (onPressed != null) {
@@ -34,9 +33,7 @@ class Button extends StatelessWidget {
           : () => _handlePressed(context),
       style: ButtonStyle(
         padding: WidgetStatePropertyAll(EdgeInsets.all(20)),
-        backgroundColor: WidgetStatePropertyAll(
-          secondaryColor,
-        ),
+        backgroundColor: WidgetStatePropertyAll(secondaryColor),
         alignment: AlignmentGeometry.center,
       ),
       child: Row(

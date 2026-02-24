@@ -10,7 +10,14 @@ class RatingStar extends StatelessWidget {
     return Row(
       children: [
         Icon(Icons.star, color: Colors.yellow[800]),
-        Text(text, style: TextStyle(color: Colors.grey, fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(
+          text,
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ],
     );
   }

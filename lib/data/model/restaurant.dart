@@ -16,13 +16,13 @@ class Restaurant {
   });
 
   factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
-        id: json['id'],
-        name: json['name'],
-        description: json['description'] ?? '',
-        pictureId: json['pictureId'],
-        city: json['city'],
-        rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
-      );
+    id: json['id'],
+    name: json['name'],
+    description: json['description'] ?? '',
+    pictureId: json['pictureId'],
+    city: json['city'],
+    rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
+  );
 }
 
 class RestaurantListResponse {
@@ -44,7 +44,8 @@ class RestaurantListResponse {
         message: json['message'] ?? '',
         count: json['count'] ?? 0,
         restaurants: List<Restaurant>.from(
-            (json['restaurants'] as List).map((x) => Restaurant.fromJson(x))),
+          (json['restaurants'] as List).map((x) => Restaurant.fromJson(x)),
+        ),
       );
 }
 
@@ -64,6 +65,7 @@ class RestaurantSearchResponse {
         error: json['error'],
         founded: json['founded'] ?? 0,
         restaurants: List<Restaurant>.from(
-            (json['restaurants'] as List).map((x) => Restaurant.fromJson(x))),
+          (json['restaurants'] as List).map((x) => Restaurant.fromJson(x)),
+        ),
       );
 }

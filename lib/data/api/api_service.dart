@@ -16,7 +16,9 @@ class ApiService {
   }
 
   Future<RestaurantDetailResponse> getRestaurantDetail(String id) async {
-    final response = await http.get(Uri.parse('${Constants.baseUrl}/detail/$id'));
+    final response = await http.get(
+      Uri.parse('${Constants.baseUrl}/detail/$id'),
+    );
     if (response.statusCode == 200) {
       return RestaurantDetailResponse.fromJson(json.decode(response.body));
     } else {
@@ -25,7 +27,9 @@ class ApiService {
   }
 
   Future<RestaurantSearchResponse> searchRestaurants(String query) async {
-    final response = await http.get(Uri.parse('${Constants.baseUrl}/search?q=$query'));
+    final response = await http.get(
+      Uri.parse('${Constants.baseUrl}/search?q=$query'),
+    );
     if (response.statusCode == 200) {
       return RestaurantSearchResponse.fromJson(json.decode(response.body));
     } else {
@@ -33,15 +37,15 @@ class ApiService {
     }
   }
 
-  Future<ReviewResponse> postReview(String id, String name, String review) async {
+  Future<ReviewResponse> postReview(
+    String id,
+    String name,
+    String review,
+  ) async {
     final response = await http.post(
       Uri.parse('${Constants.baseUrl}/review'),
       headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'id': id,
-        'name': name,
-        'review': review,
-      }),
+      body: json.encode({'id': id, 'name': name, 'review': review}),
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       return ReviewResponse.fromJson(json.decode(response.body));

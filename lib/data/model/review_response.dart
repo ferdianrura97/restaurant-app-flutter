@@ -12,10 +12,10 @@ class ReviewResponse {
   });
 
   factory ReviewResponse.fromJson(Map<String, dynamic> json) => ReviewResponse(
-        error: json['error'],
-        message: json['message'] ?? '',
-        customerReviews: List<CustomerReview>.from(
-            (json['customerReviews'] as List)
-                .map((x) => CustomerReview.fromJson(x))),
-      );
+    error: json['error'],
+    message: json['message'] ?? '',
+    customerReviews: List<CustomerReview>.from(
+      (json['customerReviews'] as List).map((x) => CustomerReview.fromJson(x)),
+    ),
+  );
 }

@@ -1,83 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../data/model/restaurant.dart';
-import '../provider/restaurant_search_provider.dart';
+import '../provider/favorite_provider.dart';
 import '../provider/result_state.dart';
 import '../common/constants.dart';
 
-class RestaurantSearchPage extends StatelessWidget {
-  const RestaurantSearchPage({super.key});
+class FavoritePage extends StatelessWidget {
+  const FavoritePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Search Restaurant')),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search by name, category, or menu',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
+      appBar: AppBar(title: const Text('Favorite Restaurants')),
+      body: Consumer<FavoriteProvider>(
+        builder: (context, provider, _) {
+          final state = provider.state;
+          if (state is ResultStateLoading<List<Restaurant>>) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ResultStateHasData<List<Restaurant>>) {
+            return ListView.builder(
+              itemCount: state.data.length,
+              itemBuilder: (context, index) {
+                var restaurant = state.data[index];
+                return _buildRestaurantItem(context, restaurant, provider);
+              },
+            );
+          } else if (state is ResultStateNoData<List<Restaurant>>) {
+            return Center(child: Text(state.message));
+          } else if (state is ResultStateError<List<Restaurant>>) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error_outline, size: 50, color: Colors.red),
+                  const SizedBox(height: 10),
+                  Text(state.error, textAlign: TextAlign.center),
+                ],
               ),
-              onChanged: (String query) {
-                Provider.of<RestaurantSearchProvider>(
-                  context,
-                  listen: false,
-                ).searchRestaurants(query);
-              },
-            ),
-          ),
-          Expanded(
-            child: Consumer<RestaurantSearchProvider>(
-              builder: (context, provider, _) {
-                final state = provider.state;
-                if (state is ResultStateLoading<RestaurantSearchResponse>) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state
-                    is ResultStateHasData<RestaurantSearchResponse>) {
-                  return ListView.builder(
-                    itemCount: state.data.restaurants.length,
-                    itemBuilder: (context, index) {
-                      var restaurant = state.data.restaurants[index];
-                      return _buildRestaurantItem(context, restaurant);
-                    },
-                  );
-                } else if (state
-                    is ResultStateNoData<RestaurantSearchResponse>) {
-                  return Center(child: Text(state.message));
-                } else if (state
-                    is ResultStateError<RestaurantSearchResponse>) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.error_outline,
-                          size: 50,
-                          color: Colors.red,
-                        ),
-                        const SizedBox(height: 10),
-                        Text(state.error, textAlign: TextAlign.center),
-                      ],
-                    ),
-                  );
-                } else {
-                  return const Center(child: Text(''));
-                }
-              },
-            ),
-          ),
-        ],
+            );
+          } else {
+            return const Center(child: Text(''));
+          }
+        },
       ),
     );
   }
 
-  Widget _buildRestaurantItem(BuildContext context, Restaurant restaurant) {
+  Widget _buildRestaurantItem(
+    BuildContext context,
+    Restaurant restaurant,
+    FavoriteProvider provider,
+  ) {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -92,7 +65,7 @@ class RestaurantSearchPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
-              tag: restaurant.pictureId,
+              tag: '${restaurant.pictureId}_favorite', // unique tag
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12),

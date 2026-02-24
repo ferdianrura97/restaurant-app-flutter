@@ -8,7 +8,9 @@ class RestaurantSearchProvider extends ChangeNotifier {
 
   RestaurantSearchProvider({required this.apiService});
 
-  ResultState<RestaurantSearchResponse> _state = const ResultStateNoData('Find your favorite restaurant!');
+  ResultState<RestaurantSearchResponse> _state = const ResultStateNoData(
+    'Find your favorite restaurant!',
+  );
   ResultState<RestaurantSearchResponse> get state => _state;
 
   Future<void> searchRestaurants(String query) async {
@@ -17,20 +19,22 @@ class RestaurantSearchProvider extends ChangeNotifier {
       notifyListeners();
       return;
     }
-    
+
     try {
       _state = const ResultStateLoading();
       notifyListeners();
-      
+
       final response = await apiService.searchRestaurants(query);
-      
+
       if (response.restaurants.isEmpty) {
         _state = const ResultStateNoData('Restaurant not found');
       } else {
         _state = ResultStateHasData(response);
       }
     } catch (e) {
-      _state = const ResultStateError('No Internet Connection or Failed to fetch data');
+      _state = const ResultStateError(
+        'No Internet Connection or Failed to fetch data',
+      );
     } finally {
       notifyListeners();
     }

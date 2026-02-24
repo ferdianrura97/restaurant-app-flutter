@@ -81,10 +81,7 @@ class IntroPage extends StatelessWidget {
 
         SizedBox(
           width: double.infinity,
-          child: Button(
-            text: "Get Started",
-            route: '/restaurantListPage',
-          ),
+          child: Button(text: "Get Started", route: '/restaurantListPage'),
         ),
       ],
     );

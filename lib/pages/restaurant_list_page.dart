@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../data/model/restaurant.dart';
 import '../provider/restaurant_list_provider.dart';
 import '../provider/result_state.dart';
-import '../provider/theme_provider.dart';
 import '../common/constants.dart';
 
 class RestaurantListPage extends StatelessWidget {
@@ -21,12 +20,16 @@ class RestaurantListPage extends StatelessWidget {
               Navigator.pushNamed(context, '/restaurantSearchPage');
             },
           ),
-          Consumer<ThemeProvider>(
-            builder: (context, themeProvider, child) {
-              return IconButton(
-                icon: Icon(themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode),
-                onPressed: () => themeProvider.toggleTheme(),
-              );
+          IconButton(
+            icon: const Icon(Icons.favorite),
+            onPressed: () {
+              Navigator.pushNamed(context, '/favoritePage');
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(context, '/settingsPage');
             },
           ),
         ],
@@ -38,9 +41,9 @@ class RestaurantListPage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               'Recommendation restauran for you!',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: Colors.grey,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(color: Colors.grey),
             ),
           ),
           Expanded(
@@ -49,7 +52,8 @@ class RestaurantListPage extends StatelessWidget {
                 final state = provider.state;
                 if (state is ResultStateLoading<RestaurantListResponse>) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (state is ResultStateHasData<RestaurantListResponse>) {
+                } else if (state
+                    is ResultStateHasData<RestaurantListResponse>) {
                   return ListView.builder(
                     itemCount: state.data.restaurants.length,
                     itemBuilder: (context, index) {
@@ -64,16 +68,20 @@ class RestaurantListPage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                         const Icon(Icons.error_outline, size: 50, color: Colors.red),
-                         const SizedBox(height: 10),
-                         Text(state.error, textAlign: TextAlign.center),
-                         const SizedBox(height: 10),
-                         ElevatedButton(
-                           onPressed: () => provider.fetchAllRestaurant(), 
-                           child: const Text('Refresh')
-                         )
+                        const Icon(
+                          Icons.error_outline,
+                          size: 50,
+                          color: Colors.red,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(state.error, textAlign: TextAlign.center),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () => provider.fetchAllRestaurant(),
+                          child: const Text('Refresh'),
+                        ),
                       ],
-                    )
+                    ),
                   );
                 } else {
                   return const Center(child: Text(''));
@@ -89,7 +97,11 @@ class RestaurantListPage extends StatelessWidget {
   Widget _buildRestaurantItem(BuildContext context, Restaurant restaurant) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/restaurantDetailPage', arguments: restaurant.id);
+        Navigator.pushNamed(
+          context,
+          '/restaurantDetailPage',
+          arguments: restaurant.id,
+        );
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -100,8 +112,8 @@ class RestaurantListPage extends StatelessWidget {
               tag: restaurant.pictureId,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12), 
-                  bottomLeft: Radius.circular(12)
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
                 ),
                 child: Image.network(
                   '${Constants.imageSmallUrl}${restaurant.pictureId}',
@@ -109,8 +121,9 @@ class RestaurantListPage extends StatelessWidget {
                   height: 100,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => const SizedBox(
-                    width: 120, height: 100, 
-                    child: Icon(Icons.error)
+                    width: 120,
+                    height: 100,
+                    child: Icon(Icons.error),
                   ),
                 ),
               ),
@@ -124,17 +137,23 @@ class RestaurantListPage extends StatelessWidget {
                     Text(
                       restaurant.name,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        const Icon(Icons.location_on, size: 16, color: Colors.grey),
+                        const Icon(
+                          Icons.location_on,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
                         const SizedBox(width: 4),
                         Text(
-                          restaurant.city, 
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey)
+                          restaurant.city,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                         ),
                       ],
                     ),
@@ -145,7 +164,7 @@ class RestaurantListPage extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           restaurant.rating.toString(),
-                          style: Theme.of(context).textTheme.bodyMedium
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
                     ),
