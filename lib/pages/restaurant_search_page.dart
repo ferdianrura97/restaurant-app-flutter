@@ -11,6 +11,7 @@ class RestaurantSearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text('Search Restaurant')),
       body: Column(
         children: [

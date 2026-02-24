@@ -10,5 +10,9 @@ class Navigation {
     );
   }
 
+  static Future<dynamic>? intentTo(String routeName) {
+    return navigatorKey.currentState?.pushNamed(routeName);
+  }
+
   static void back() => navigatorKey.currentState?.pop();
 }

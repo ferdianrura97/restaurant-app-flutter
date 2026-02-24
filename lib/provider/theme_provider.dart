@@ -16,9 +16,9 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleTheme() {
+  Future<void> toggleTheme() async {
     _isDarkMode = !_isDarkMode;
-    preferencesHelper.setDarkTheme(_isDarkMode);
+    await preferencesHelper.setDarkTheme(_isDarkMode);
     notifyListeners();
   }
 }

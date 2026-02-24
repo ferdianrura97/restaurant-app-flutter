@@ -28,13 +28,23 @@ class NotificationHelper {
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
+
     await plugin.initialize(
       settings: initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse details) async {
         final payload = details.payload;
-        if (payload != null) {
-          var data = json.decode(payload);
-          Navigation.intentWithData('/restaurantDetailPage', data['id']);
+        if (payload != null && payload.isNotEmpty) {
+          dynamic data;
+          try {
+            data = json.decode(payload);
+          } catch (_) {
+            return;
+          }
+
+          final id = (data is Map) ? data['id'] : null;
+          if (id != null) {
+            Navigation.intentWithData('/restaurantDetailPage', id);
+          }
         }
       },
     );

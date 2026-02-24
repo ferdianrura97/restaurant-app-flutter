@@ -13,9 +13,9 @@ class PreferencesHelper {
     return prefs.getBool(darkTheme) ?? false;
   }
 
-  void setDarkTheme(bool value) async {
+  Future<void> setDarkTheme(bool value) async {
     final prefs = await sharedPreferences;
-    prefs.setBool(darkTheme, value);
+    await prefs.setBool(darkTheme, value);
   }
 
   Future<bool> get isDailyReminderActive async {
@@ -23,8 +23,8 @@ class PreferencesHelper {
     return prefs.getBool(dailyReminder) ?? false;
   }
 
-  void setDailyReminder(bool value) async {
+  Future<void> setDailyReminder(bool value) async {
     final prefs = await sharedPreferences;
-    prefs.setBool(dailyReminder, value);
+    await prefs.setBool(dailyReminder, value);
   }
 }

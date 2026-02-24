@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,12 +27,27 @@ import 'common/navigation.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  final prefs = await SharedPreferences.getInstance();
+
   final NotificationHelper notificationHelper = NotificationHelper();
   final BackgroundService service = BackgroundService();
   service.initializeIsolate();
 
   await notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
   await notificationHelper.requestPermission(flutterLocalNotificationsPlugin);
+
+  // Check if app was launched by tapping a notification
+  final launchDetails =
+      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  String? notificationRestaurantId;
+  if (launchDetails != null &&
+      launchDetails.didNotificationLaunchApp &&
+      launchDetails.notificationResponse?.payload != null) {
+    try {
+      final data = json.decode(launchDetails.notificationResponse!.payload!);
+      notificationRestaurantId = (data is Map) ? data['id'] : null;
+    } catch (_) {}
+  }
 
   Workmanager().initialize(callbackDispatcher);
 
@@ -41,14 +57,14 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => ThemeProvider(
             preferencesHelper: PreferencesHelper(
-              sharedPreferences: SharedPreferences.getInstance(),
+              sharedPreferences: Future.value(prefs),
             ),
           ),
         ),
         ChangeNotifierProvider(
           create: (_) => SchedulingProvider(
             preferencesHelper: PreferencesHelper(
-              sharedPreferences: SharedPreferences.getInstance(),
+              sharedPreferences: Future.value(prefs),
             ),
           ),
         ),
@@ -65,13 +81,34 @@ void main() async {
           create: (_) => FavoriteProvider(databaseHelper: DatabaseHelper()),
         ),
       ],
-      child: const MyApp(),
+      child: MyApp(notificationRestaurantId: notificationRestaurantId),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  final String? notificationRestaurantId;
+
+  const MyApp({super.key, this.notificationRestaurantId});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.notificationRestaurantId != null) {
+      // Wait for navigator to be ready, then navigate to detail page
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        navigatorKey.currentState?.pushNamed(
+          '/restaurantDetailPage',
+          arguments: widget.notificationRestaurantId,
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
